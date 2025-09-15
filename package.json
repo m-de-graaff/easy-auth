@@ -1,0 +1,9 @@
+{
+  "name": "easy-auth",
+  "version": "0.0.1",
+  "description": "Reserved package name for future use",
+  "type": "module",
+  "main": "index.js",
+  "author": "Mark de Graaff",
+  "license": "MIT"
+}
