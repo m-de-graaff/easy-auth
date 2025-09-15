@@ -8,9 +8,7 @@
   "author": "Mark de Graaff",
   "license": "MIT",
   "packageManager": "pnpm@10.13.1",
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/**"],
   "scripts": {
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
@@ -29,9 +27,13 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@typescript-eslint/eslint-plugin": "^8.7.0",
+    "@typescript-eslint/parser": "^8.7.0",
     "@changesets/cli": "^2.27.8",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "eslint": "^9.9.0",
     "turbo": "^2.0.11"
   }
 }

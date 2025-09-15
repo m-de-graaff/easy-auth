@@ -1,4 +1,4 @@
-import type { Account, AuditEvent, Session, User, VerificationToken } from './types';
+import type { Account, AuditEvent, Session, User, VerificationToken } from "./types";
 
 export interface Adapter {
   // Users
@@ -12,7 +12,7 @@ export interface Adapter {
   getAccountByProvider(provider: string, providerAccountId: string): Promise<Account | null>;
 
   // Sessions
-  createSession(s: Omit<Session, 'id' | 'createdAt' | 'updatedAt'>): Promise<Session>;
+  createSession(s: Omit<Session, "id" | "createdAt" | "updatedAt">): Promise<Session>;
   getSession(id: string): Promise<Session | null>;
   deleteSession(id: string): Promise<void>;
 
@@ -25,4 +25,3 @@ export interface Adapter {
 }
 
 export type AdapterFactory<TConfig = unknown> = (config: TConfig) => Adapter;
-

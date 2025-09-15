@@ -1,6 +1,6 @@
-import { randomUUID } from 'node:crypto';
-import type { Adapter } from '../adapter';
-import type { Account, Session, User, VerificationToken } from '../types';
+import { randomUUID } from "node:crypto";
+import type { Adapter } from "../adapter";
+import type { Account, Session, User, VerificationToken } from "../types";
 
 export function createMemoryAdapter(): Adapter {
   const users = new Map<string, User>();
@@ -23,7 +23,9 @@ export function createMemoryAdapter(): Adapter {
         updatedAt: data.updatedAt ?? now,
       };
       users.set(id, user);
-      if (user.email) usersByEmail.set(user.email.toLowerCase(), id);
+      if (user.email) {
+        usersByEmail.set(user.email.toLowerCase(), id);
+      }
       return user;
     },
 
@@ -33,12 +35,14 @@ export function createMemoryAdapter(): Adapter {
 
     async getUserByEmail(email) {
       const id = usersByEmail.get(email.toLowerCase());
-      return id ? users.get(id)! : null;
+      return id ? (users.get(id) ?? null) : null;
     },
 
     async updateUser(id, data) {
       const existing = users.get(id);
-      if (!existing) throw new Error('User not found');
+      if (!existing) {
+        throw new Error("User not found");
+      }
       const next: User = {
         ...existing,
         ...data,
@@ -48,13 +52,17 @@ export function createMemoryAdapter(): Adapter {
       if (existing.email && existing.email !== next.email) {
         usersByEmail.delete(existing.email.toLowerCase());
       }
-      if (next.email) usersByEmail.set(next.email.toLowerCase(), id);
+      if (next.email) {
+        usersByEmail.set(next.email.toLowerCase(), id);
+      }
       return next;
     },
 
     async linkAccount(acc) {
       const normalized: Account = { ...(acc as Account) } as Account;
-      if (!normalized.id) normalized.id = randomUUID();
+      if (!normalized.id) {
+        normalized.id = randomUUID();
+      }
       const key = `${normalized.provider}:${normalized.providerAccountId}`;
       accounts.set(key, normalized);
       return normalized;
@@ -88,7 +96,9 @@ export function createMemoryAdapter(): Adapter {
 
     async createVerificationToken(v) {
       const token: VerificationToken = { ...(v as VerificationToken) } as VerificationToken;
-      if (!token.id) token.id = randomUUID();
+      if (!token.id) {
+        token.id = randomUUID();
+      }
       const key = `${token.identifier}:${token.token}`;
       verificationTokens.set(key, token);
       return token;
@@ -97,9 +107,13 @@ export function createMemoryAdapter(): Adapter {
     async useVerificationToken(identifier, token) {
       const key = `${identifier}:${token}`;
       const found = verificationTokens.get(key) ?? null;
-      if (!found) return null;
+      if (!found) {
+        return null;
+      }
       verificationTokens.delete(key); // single-use
-      if (found.expiresAt.getTime() < Date.now()) return null;
+      if (found.expiresAt.getTime() < Date.now()) {
+        return null;
+      }
       return found;
     },
 

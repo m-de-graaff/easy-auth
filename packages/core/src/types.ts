@@ -37,7 +37,7 @@ export type VerificationToken = {
 export type AuthKey = {
   id: string;
   userId: string;
-  type: 'webauthn' | 'totp';
+  type: "webauthn" | "totp";
   publicKey?: string; // webauthn
   counter?: number; // webauthn device counter
   label?: string;
