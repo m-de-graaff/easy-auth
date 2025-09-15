@@ -1,9 +1,37 @@
 {
-  "name": "easy-auth",
-  "version": "0.0.1",
+  "name": "@easyauth-js/auth",
+  "version": "1.0.0",
   "description": "Reserved package name for future use",
+  "private": true,
   "type": "module",
   "main": "index.js",
   "author": "Mark de Graaff",
-  "license": "MIT"
+  "license": "MIT",
+  "packageManager": "pnpm@10.13.1",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "biome check .",
+    "lint:fix": "biome check --apply-unsafe .",
+    "format": "biome format .",
+    "format:write": "biome format --write .",
+    "prepare": "husky install",
+    "changeset": "changeset",
+    "version-packages": "changeset version && pnpm install -r",
+    "release": "changeset publish"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@changesets/cli": "^2.27.8",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "turbo": "^2.0.11"
+  }
 }

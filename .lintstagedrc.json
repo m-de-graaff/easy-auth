@@ -1,0 +1,6 @@
+{
+  "*.{js,mjs,cjs,ts,tsx,jsx,json,md}": [
+    "biome check --apply-unsafe --no-errors-on-unmatched --write"
+  ]
+}
+
