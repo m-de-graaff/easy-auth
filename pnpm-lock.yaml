@@ -70,6 +70,38 @@ importers:
   packages/examples/next-pages-router: {}
 
   packages/provider:
+    dependencies:
+      '@easyauth-js/providers-credentials':
+        specifier: workspace:*
+        version: link:../providers/credentials
+      '@easyauth-js/providers-github':
+        specifier: workspace:*
+        version: link:../providers/github
+      '@easyauth-js/providers-google':
+        specifier: workspace:*
+        version: link:../providers/google
+      '@easyauth-js/providers-passkey':
+        specifier: workspace:*
+        version: link:../providers/passkey
+    devDependencies:
+      rimraf:
+        specifier: ^5.0.5
+        version: 5.0.10
+      typescript:
+        specifier: ^5.5.4
+        version: 5.9.2
+
+  packages/providers:
+    dependencies:
+      '@easyauth-js/providers-discord':
+        specifier: workspace:*
+        version: link:discord
+      '@easyauth-js/providers-github':
+        specifier: workspace:*
+        version: link:github
+      '@easyauth-js/providers-google':
+        specifier: workspace:*
+        version: link:google
     devDependencies:
       rimraf:
         specifier: ^5.0.5

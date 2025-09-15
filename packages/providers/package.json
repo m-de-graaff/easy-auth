@@ -1,0 +1,29 @@
+{
+  "name": "@easyauth-js/providers",
+  "version": "0.0.0",
+  "license": "MIT",
+  "type": "module",
+  "private": false,
+  "main": "./dist/index.js",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rimraf dist tsconfig.tsbuildinfo"
+  },
+  "dependencies": {
+    "@easyauth-js/providers-discord": "workspace:*",
+    "@easyauth-js/providers-github": "workspace:*",
+    "@easyauth-js/providers-google": "workspace:*"
+  },
+  "devDependencies": {
+    "rimraf": "^5.0.5",
+    "typescript": "^5.5.4"
+  }
+}

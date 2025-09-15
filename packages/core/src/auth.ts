@@ -70,3 +70,43 @@ export async function getCurrentUser(adapter: Adapter, sessionId: string): Promi
   }
   return adapter.getUser(session.userId);
 }
+
+export type OAuthProfile = {
+  id: string;
+  email?: string | null;
+  name?: string | null;
+  image?: string | null;
+};
+
+export async function oauthLogin(
+  adapter: Adapter,
+  provider: string,
+  profile: OAuthProfile,
+): Promise<{ user: User; session: Session }> {
+  let user: User | null = null;
+  if (profile.email) {
+    user = await adapter.getUserByEmail(profile.email);
+  }
+  if (!user) {
+    user = await adapter.createUser({
+      email: profile.email ?? null,
+      name: profile.name ?? null,
+      image: profile.image ?? null,
+    });
+  }
+  await adapter.linkAccount({
+    id: "",
+    userId: user.id,
+    provider,
+    providerAccountId: profile.id,
+    accessToken: null,
+    refreshToken: null,
+    tokenType: null,
+    expiresAt: null,
+  });
+  const session = await adapter.createSession({
+    userId: user.id,
+    expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+  });
+  return { user, session };
+}

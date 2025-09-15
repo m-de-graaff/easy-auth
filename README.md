@@ -80,12 +80,12 @@ interface Adapter {
   linkAccount(acc: Account): Promise<Account>;
   getAccountByProvider(
     provider: string,
-    providerAccountId: string
+    providerAccountId: string,
   ): Promise<Account | null>;
 
   // Sessions
   createSession(
-    s: Omit<Session, "id" | "createdAt" | "updatedAt">
+    s: Omit<Session, 'id' | 'createdAt' | 'updatedAt'>,
   ): Promise<Session>;
   getSession(id: string): Promise<Session | null>;
   deleteSession(id: string): Promise<void>;
@@ -94,7 +94,7 @@ interface Adapter {
   createVerificationToken(v: VerificationToken): Promise<VerificationToken>;
   useVerificationToken(
     identifier: string,
-    token: string
+    token: string,
   ): Promise<VerificationToken | null>;
 
   // Audit
@@ -110,13 +110,13 @@ interface Adapter {
 ### Minimal config
 
 ```ts
-import { createConfig, createMemoryAdapter } from "@easyauth-js/core";
+import { createConfig, createMemoryAdapter } from '@easyauth-js/core';
 
 const config = createConfig({
-  baseUrl: "http://localhost:3000",
-  cookie: { sameSite: "lax", secure: false },
-  jwt: { issuer: "example-app", rotationDays: 30 },
-  session: { strategy: "database", ttlMinutes: 60, rolling: true },
+  baseUrl: 'http://localhost:3000',
+  cookie: { sameSite: 'lax', secure: false },
+  jwt: { issuer: 'example-app', rotationDays: 30 },
+  session: { strategy: 'database', ttlMinutes: 60, rolling: true },
   adapter: createMemoryAdapter(),
 });
 ```
@@ -128,23 +128,51 @@ const config = createConfig({
 3. Implement a simple flow using your adapter (e.g., create a user and session).
 
 ```ts
-import { createConfig, createMemoryAdapter } from "@easyauth-js/core";
+import { createConfig, createMemoryAdapter } from '@easyauth-js/core';
 
 const adapter = createMemoryAdapter();
 const config = createConfig({
-  baseUrl: "http://localhost:3000",
-  cookie: { sameSite: "lax" },
-  jwt: { issuer: "demo", rotationDays: 30 },
-  session: { strategy: "database", ttlMinutes: 60 },
+  baseUrl: 'http://localhost:3000',
+  cookie: { sameSite: 'lax' },
+  jwt: { issuer: 'demo', rotationDays: 30 },
+  session: { strategy: 'database', ttlMinutes: 60 },
   adapter,
 });
 
-const user = await adapter.createUser({ email: "demo@example.com" });
+const user = await adapter.createUser({ email: 'demo@example.com' });
 const session = await adapter.createSession({
   userId: user.id,
   expiresAt: new Date(Date.now() + 60 * 60 * 1000),
 });
 console.log({ user, session });
+```
+
+## OAuth Providers
+
+EasyAuth ships a lightweight OAuth framework with built-in providers for
+Google, GitHub, and Discord. Authorization Code + PKCE and state handling are
+included by default.
+
+Add a provider by setting environment variables and using the provider helper:
+
+```ts
+import { buildAuthorizationUrl, google } from '@easyauth-js/provider';
+
+const { url, state, verifier } = buildAuthorizationUrl(google.provider, {
+  clientId: process.env.GOOGLE_CLIENT_ID!,
+  redirectUri: 'http://localhost:3000/callback/google',
+});
+```
+
+Example environment template:
+
+```env
+GOOGLE_CLIENT_ID="your-client-id"
+GOOGLE_CLIENT_SECRET="your-client-secret"
+GITHUB_CLIENT_ID="your-client-id"
+GITHUB_CLIENT_SECRET="your-client-secret"
+DISCORD_CLIENT_ID="your-client-id"
+DISCORD_CLIENT_SECRET="your-client-secret"
 ```
 
 ## Security Defaults (planned)
