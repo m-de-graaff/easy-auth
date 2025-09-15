@@ -1,2 +1,1 @@
-export * from '@easyauth-js/providers-github';
-
+export * from "@easyauth-js/providers-github";

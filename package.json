@@ -7,6 +7,10 @@
   "main": "index.js",
   "author": "Mark de Graaff",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-de-graaff/easy-auth.git"
+  },
   "packageManager": "pnpm@10.13.1",
   "workspaces": ["packages/**"],
   "scripts": {
@@ -20,7 +24,8 @@
     "prepare": "husky install",
     "changeset": "changeset",
     "version-packages": "changeset version && pnpm install -r",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "publish:pkg": "node scripts/publish.mjs"
   },
   "publishConfig": {
     "access": "public"

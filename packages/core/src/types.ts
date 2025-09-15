@@ -17,6 +17,7 @@ export type Account = {
   refreshToken?: string | null;
   tokenType?: string | null;
   expiresAt?: number | null; // seconds epoch
+  passwordHash?: string | null;
 };
 
 export type Session = {
@@ -52,4 +53,3 @@ export type AuditEvent = {
   meta?: unknown;
   createdAt?: Date;
 };
-

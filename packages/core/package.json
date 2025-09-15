@@ -3,9 +3,15 @@
   "version": "0.0.0",
   "description": "EasyAuth core types, interfaces, and contracts",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/m-de-graaff/easy-auth.git",
+    "directory": "packages/core"
+  },
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": ["dist"],
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -25,4 +31,3 @@
     "vitest": "^2.1.1"
   }
 }
-

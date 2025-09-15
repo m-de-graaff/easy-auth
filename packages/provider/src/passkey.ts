@@ -1,2 +1,1 @@
-export * from '@easyauth-js/providers-passkey';
-
+export * from "@easyauth-js/providers-passkey";
